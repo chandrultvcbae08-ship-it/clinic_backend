@@ -35,9 +35,9 @@ DEBUG = config(
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
     default=(
-        "localhost,"
-        "127.0.0.1,"
-        "clinic-backend-6c4x.onrender.com"
+          "clinic-backend-6c4x.onrender.com",
+          "localhost",
+          "127.0.0.1",
     ),
     cast=Csv(),
 )
@@ -124,20 +124,6 @@ TEMPLATES = [
 # ============================================================
 
 WSGI_APPLICATION = "config.wsgi.application"
-
-
-# ============================================================
-# DATABASE - POSTGRESQL
-# ============================================================
-
-# Local development:
-# PostgreSQL database:
-# mediconnect_db
-#
-# Production:
-# Set DATABASE_URL in Render Environment Variables.
-#
-# No Neon-specific configuration is used here.
 
 DATABASES = {
     "default": dj_database_url.config(
