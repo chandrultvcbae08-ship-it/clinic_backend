@@ -2,7 +2,7 @@ from datetime import timedelta
 from pathlib import Path
 
 import dj_database_url
-from decouple import Csv, config
+from decouple import config, Csv
 
 
 # ============================================================
@@ -290,7 +290,13 @@ CORS_ALLOWED_ORIGINS = config(
         "https://clinic-frontend-two-chi.vercel.app"
     ),
     cast=Csv(),
-)
+
+CSRF_TRUSTED_ORIGINS = config(
+    "CSRF_TRUSTED_ORIGINS",
+    default="http://localhost:5173",
+    cast=Csv(),
+
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1", cast=Csv())
 
 CORS_ALLOW_CREDENTIALS = True
 
