@@ -1,20 +1,9 @@
 from datetime import timedelta
 from pathlib import Path
-
 import dj_database_url
 from decouple import config, Csv
 
-
-# ============================================================
-# BASE DIRECTORY
-# ============================================================
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# ============================================================
-# SECURITY
-# ============================================================
 
 SECRET_KEY = config(
     "SECRET_KEY",
@@ -27,11 +16,6 @@ DEBUG = config(
     cast=bool,
 )
 
-
-# ============================================================
-# ALLOWED HOSTS
-# ============================================================
-
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
     default=(
@@ -42,47 +26,27 @@ ALLOWED_HOSTS = config(
     cast=Csv(),
 )
 
-
-# ============================================================
-# APPLICATIONS
-# ============================================================
-
 INSTALLED_APPS = [
-    # Django built-in apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    # Third-party apps
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "django_filters",
-
-    # Local apps
     "users.apps.UsersConfig",
     "doctors.apps.DoctorsConfig",
     "appointments.apps.AppointmentsConfig",
 ]
 
-
-# ============================================================
-# MIDDLEWARE
-# ============================================================
-
 MIDDLEWARE = [
-    # CORS middleware should be near the top
     "corsheaders.middleware.CorsMiddleware",
-
     "django.middleware.security.SecurityMiddleware",
-
-    # WhiteNoise for static files
     "whitenoise.middleware.WhiteNoiseMiddleware",
-
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -91,17 +55,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
-# ============================================================
-# URL CONFIGURATION
-# ============================================================
-
 ROOT_URLCONF = "config.urls"
-
-
-# ============================================================
-# TEMPLATES
-# ============================================================
 
 TEMPLATES = [
     {
@@ -118,11 +72,6 @@ TEMPLATES = [
     },
 ]
 
-
-# ============================================================
-# WSGI
-# ============================================================
-
 WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
@@ -138,18 +87,7 @@ DATABASES = {
     )
 }
 
-
-# ============================================================
-# CUSTOM USER MODEL
-# ============================================================
-
 AUTH_USER_MODEL = "users.User"
-
-
-# ============================================================
-# PASSWORD VALIDATION
-# ============================================================
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": (
@@ -180,33 +118,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# ============================================================
-# INTERNATIONALIZATION
-# ============================================================
-
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
-
-
-# ============================================================
-# STATIC FILES
-# ============================================================
-
 STATIC_URL = "/static/"
-
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
-
-# ============================================================
-# WHITENOISE
-# ============================================================
-
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -216,17 +133,7 @@ STORAGES = {
     },
 }
 
-
-# ============================================================
-# DEFAULT PRIMARY KEY
-# ============================================================
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-
-# ============================================================
-# DJANGO REST FRAMEWORK
-# ============================================================
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -250,46 +157,26 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 12,
 }
 
-
-# ============================================================
-# SIMPLE JWT
-# ============================================================
-
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-
     "ROTATE_REFRESH_TOKENS": True,
-
     "BLACKLIST_AFTER_ROTATION": False,
-
     "AUTH_HEADER_TYPES": ("Bearer",),
-
     "AUTH_TOKEN_CLASSES": (
         "rest_framework_simplejwt.tokens.AccessToken",
     ),
 }
 
 
-# ============================================================
-# CORS
-# ============================================================
-
-# Local frontend
-# http://localhost:5173
-#
-# Production frontend
-# https://clinic-frontend-two-chi.vercel.app
-
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS",
-    default=(
+    default=("http://localhost:5173,http://127.0.0.1:5173",
         "http://localhost:5173,"
         "http://127.0.0.1:5173,"
-        "https://clinic-frontend-two-chi.vercel.app"
-    ),
+        "https://clinic-frontend-two-chi.vercel.app")
     cast=Csv(),
+),
 
 CSRF_TRUSTED_ORIGINS = config(
     "CSRF_TRUSTED_ORIGINS",
@@ -301,30 +188,16 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1", cast=Csv(
 CORS_ALLOW_CREDENTIALS = True
 
 
-# ============================================================
-# CSRF
-# ============================================================
-
 CSRF_TRUSTED_ORIGINS = config(
     "CSRF_TRUSTED_ORIGINS",
     default="https://clinic-frontend-two-chi.vercel.app",
     cast=Csv(),
 )
 
-
-# ============================================================
-# RENDER / HTTPS
-# ============================================================
-
 SECURE_PROXY_SSL_HEADER = (
     "HTTP_X_FORWARDED_PROTO",
     "https",
 )
-
-
-# ============================================================
-# HTTPS REDIRECT
-# ============================================================
 
 SECURE_SSL_REDIRECT = config(
     "SECURE_SSL_REDIRECT",
